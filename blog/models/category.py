@@ -1,0 +1,13 @@
+from .base import BaseModel
+from django.db import models
+
+
+class Category(BaseModel):
+    name = models.CharField(max_length=20, verbose_name='分类名', unique=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = '分类'
+        verbose_name_plural = '分类'
