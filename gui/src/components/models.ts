@@ -1,3 +1,5 @@
+
+
 export interface Todo {
   id: number;
   content: string;
@@ -38,6 +40,16 @@ export type FolderBase = {
   articles: ArticleBase[];
 }
 
+export type ArticleDetail = ArticleBase & {
+  content: string;
+  author: Author;
+  createdAt: string;
+  updatedAt:string;
+  tags: Tag[];
+  category: Category;
+  isTop: boolean;
+}
+
 
 
 
@@ -50,7 +62,9 @@ export type FolderBase = {
 
 
 export function fromUnderscoreToCamelCase<T>(obj: T): T {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   if (Array.isArray(obj)) return obj.map((v) => fromUnderscoreToCamelCase(v)) as any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const result = {} as any;
   for (const key in obj) {
     if (Object.prototype.hasOwnProperty.call(obj, key)) {

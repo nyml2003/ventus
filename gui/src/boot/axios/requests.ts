@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {ArticleBase, FolderBase, fromUnderscoreToCamelCase} from 'components/models';
+import {ArticleDetail, FolderBase, fromUnderscoreToCamelCase} from 'components/models';
 
 export const devURL  = 'http://127.0.0.1:5000/';
 export const baseURL : string = process.env.NODE_ENV === 'production' ? 'https://api.example.com' : devURL
@@ -34,14 +34,17 @@ export interface ArticleListParams {
 //   }
 // }
 
-export async function getArticleById(id: number): Promise<ArticleBase> {
+export async function getArticleById(id: number): Promise<ArticleDetail> {
   try {
     const { data } = await api.get(`/blog/articles/detail/${id}`);
-    return fromUnderscoreToCamelCase<ArticleBase>(data);
+    const article = fromUnderscoreToCamelCase<ArticleDetail>(data);
+    article.createdAt = new Date(article.createdAt).toLocaleString();
+    article.updatedAt = new Date(article.updatedAt).toLocaleString();
+    return article;
   }
   catch (error) {
     console.log(error);
-    return {} as ArticleBase;
+    return {} as ArticleDetail;
   }
 }
 

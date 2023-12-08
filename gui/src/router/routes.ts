@@ -8,8 +8,22 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/folder',
     component: () => import('layouts/FolderLayout.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('components/indexPage.vue'),
+      },
+      {
+        path: 'article',
+        children: [
+          {
+            path: ':id',
+            component: () => import('components/ArticleDetail.vue'),
+          },
+        ],
+      },
+    ],
   },
-
 
   // Always leave this as last one,
   // but you can also remove it

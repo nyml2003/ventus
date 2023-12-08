@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, onMounted, PropType, ref } from 'vue';
+import { defineProps, onMounted,  ref } from 'vue';
 import { FolderBase } from 'components/models';
 import { getFileList } from 'src/boot/axios/requests';
 import ArticleItem from './ArticleItem.vue';
@@ -13,7 +13,6 @@ const props = defineProps({
 const folder = ref<FolderBase>({} as FolderBase);
 onMounted(async () => {
   folder.value = await getFileList(props.id);
-  console.log(folder.value);
 });
 const icon = ref('keyboard_arrow_right');
 const isVisible = ref(false);
@@ -41,26 +40,27 @@ function toggleVisibility() {
       </q-item-section>
     </q-item>
     <q-item
-      v-if="isVisible && folder.folders.length > 0"
-      class="q-pa-none q-pl-sm"
-      dense
-    >
-      <q-item-section>
-        <FileList
-          v-for="child in folder.folders"
-          :id="child.id"
-          :key="child.id"
-        />
-      </q-item-section>
-    </q-item>
-    <q-item
       v-if="isVisible && folder.articles.length > 0"
-      class="q-pa-none q-pl-sm"
+      class="q-pa-none q-pl-lg"
       dense
     >
       <q-item-section>
         <ArticleItem
           v-for="child in folder.articles"
+          :id="child.id"
+          :key="child.id"
+          :title="child.title"
+        />
+      </q-item-section>
+    </q-item>
+    <q-item
+      v-if="isVisible && folder.folders.length > 0"
+      class="q-pa-none q-pl-lg"
+      dense
+    >
+      <q-item-section>
+        <FileList
+          v-for="child in folder.folders"
           :id="child.id"
           :key="child.id"
         />
