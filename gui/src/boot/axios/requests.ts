@@ -3,7 +3,7 @@ import {ArticleDetail, Character, CharacterDetail, Equipment, Folder, Friend, fr
 
 export const devURL  = 'http://127.0.0.1:5000/';
 export const baseURL: string =
-  process.env.NODE_ENV === 'production' ? 'http://39.101.164.12/api' : devURL;
+  process.env.NODE_ENV === 'production' ? 'http://39.101.164.12:8080/api' : devURL;
 export const api = axios.create({
   baseURL: baseURL,
   headers: {
