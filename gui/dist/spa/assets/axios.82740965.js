@@ -1,0 +1,1 @@
+import{j as a}from"./index.c9b20d8c.js";import{a as i,b as r}from"./requests.38fa4781.js";import{b}from"./requests.38fa4781.js";var e=a(({app:o})=>{o.config.globalProperties.$axios=i,o.config.globalProperties.$api=r});export{b as api,e as default};
