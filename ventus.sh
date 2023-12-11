@@ -2,7 +2,7 @@
 
 if [ "$1" == "init" ]; then
     # Create Python virtual environment
-    python -m venv pyenv
+    python3 -m venv pyenv
     source pyenv/bin/activate
     pip install -r requirements.txt
     # Install front-end dependencies
@@ -15,7 +15,7 @@ elif [ "$1" == "run" ]; then
         # Activate Python virtual environment
         source pyenv/bin/activate
         # Run Django back-end server
-        python manage.py runserver 5000
+        python3 manage.py runserver 5000
     else
         echo "Invalid option for 'run'. Use 'front' or 'back'."
     fi
@@ -26,8 +26,8 @@ elif [ "$1" == "update" ]; then
 elif [ "$1" == "db" ]; then
     # Create database migrations
     source pyenv/bin/activate
-    python manage.py makemigrations
-    python manage.py migrate
+    python3 manage.py makemigrations
+    python3 manage.py migrate
 else
     echo "Usage: ventus.sh [init|run|update|db]"
 fi
