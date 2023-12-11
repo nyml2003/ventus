@@ -20,7 +20,6 @@ if "%1"=="init" (
     python manage.py migrate
 )else if "%1"=="build" (
     pnpm -C gui run build
-)
-else (
+)else (
     echo "Usage: ventus.bat [init|run|update|clean]"
 )

@@ -28,6 +28,10 @@ elif [ "$1" == "db" ]; then
     source pyenv/bin/activate
     python3 manage.py makemigrations
     python3 manage.py migrate
+elif [ "$1" == "build" ]; then
+    sudo cp -r ./dist /var/www/blog/
+    sudo systemctl restart nginx
+    uwsgi --ini uwsgi.ini
 else
-    echo "Usage: ventus.sh [init|run|update|db]"
+    echo "Usage: ventus.sh [init|run|update|db|build]"
 fi
