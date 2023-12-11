@@ -29,9 +29,10 @@ elif [ "$1" == "db" ]; then
     python3 manage.py makemigrations
     python3 manage.py migrate
 elif [ "$1" == "build" ]; then
-    sudo cp -r ./dist /var/www/blog/
+    sudo cp -r gui/dist /var/www/blog/
     sudo systemctl restart nginx
     uwsgi --ini uwsgi.ini
+    python3 manage.py runserver 5000
 else
     echo "Usage: ventus.sh [init|run|update|db|build]"
 fi
