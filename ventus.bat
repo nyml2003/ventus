@@ -18,6 +18,9 @@ if "%1"=="init" (
     call pyenv\\Scripts\\activate.bat
     python manage.py makemigrations
     python manage.py migrate
-) else (
+)else if "%1"=="build" (
+    pnpm -C gui run build
+)
+else (
     echo "Usage: ventus.bat [init|run|update|clean]"
 )
