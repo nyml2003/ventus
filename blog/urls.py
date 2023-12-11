@@ -9,6 +9,6 @@ urlpatterns = [
     path('articles/update/<int:pk>/', ArticleUpdate.as_view()),
     path('articles/delete/<int:pk>/', ArticleDelete.as_view()),
     path('folders/<int:pk>/', FolderDetail.as_view()),
-    path('files/tree/', FileTree.as_view()),
     path('files/list/<int:pk>/', FileList.as_view()),
+    path('friends/list/', FriendList.as_view()),
 ]

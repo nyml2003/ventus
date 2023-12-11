@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {ArticleDetail, FolderBase, fromUnderscoreToCamelCase} from 'components/models';
+import {ArticleDetail, Folder, Friend, fromUnderscoreToCamelCase} from 'components/models';
 
 export const devURL  = 'http://127.0.0.1:5000/';
 export const baseURL : string = process.env.NODE_ENV === 'production' ? 'https://api.example.com' : devURL
@@ -21,25 +21,12 @@ export interface ArticleListParams {
 }
 
 
-// export async function getArticleList (
-//   params?: ArticleListParams
-// ): Promise<ArticleOutline[]>  {
-//   try {
-//     const {data}  = await api.get('/blog/articles/list/', { params });
-//     return data.map((article: ArticleOutline) => fromUnderscoreToCamelCase(article));
-//   }
-//   catch (error) {
-//     console.log(error);
-//     return {} as ArticleOutline[];
-//   }
-// }
-
 export async function getArticleById(id: number): Promise<ArticleDetail> {
   try {
     const { data } = await api.get(`/blog/articles/detail/${id}`);
     const article = fromUnderscoreToCamelCase<ArticleDetail>(data);
-    article.createdAt = new Date(article.createdAt).toLocaleString();
-    article.updatedAt = new Date(article.updatedAt).toLocaleString();
+    article.createTime = new Date(article.createTime).toLocaleString();
+    article.updateTime = new Date(article.updateTime).toLocaleString();
     return article;
   }
   catch (error) {
@@ -49,13 +36,28 @@ export async function getArticleById(id: number): Promise<ArticleDetail> {
 }
 
 
-export async function getFileList(id:number): Promise<FolderBase> {
+export async function getFileList(id:number): Promise<Folder> {
   try {
     const { data } = await api.get(`/blog/files/list/${id}`);
-    return fromUnderscoreToCamelCase<FolderBase>(data);
+    const folder = fromUnderscoreToCamelCase<Folder>(data);
+    folder.createTime = new Date(folder.createTime).toLocaleString();
+    folder.updateTime = new Date(folder.updateTime).toLocaleString();
+    return folder;
   }
   catch (error) {
     console.log(error);
-    return {} as FolderBase;
+    return {} as Folder;
+  }
+}
+
+export async function getFriendList(): Promise<Friend[]> {
+  try {
+    const { data } = await api.get('/blog/friends/list');
+    const friend = fromUnderscoreToCamelCase<Friend[]>(data);
+    return friend;
+  }
+  catch (error) {
+    console.log(error);
+    return [] as Friend[];
   }
 }

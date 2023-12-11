@@ -1,5 +1,3 @@
-
-
 export interface Todo {
   id: number;
   content: string;
@@ -9,61 +7,69 @@ export interface Meta {
   totalCount: number;
 }
 
-
 export type Tag = {
   name: string;
-}
+};
 
 export type Category = {
   name: string;
-}
+};
 
 export type ParentFolder = {
+  id: number;
   name: string;
-}
+};
 
 export type Author = {
   name: string;
   avatarUrl: string;
-}
+};
 
-export type ArticleBase = {
+export type Article = {
   id: number;
   title: string;
-}
-
-export type FolderBase = {
-  id: number;
-  name: string;
-  parent: FolderBase | null;
-  folders: FolderBase[];
-  articles: ArticleBase[];
-}
-
-export type ArticleDetail = ArticleBase & {
-  content: string;
+  brief: string;
   author: Author;
-  createdAt: string;
-  updatedAt:string;
+  createTime: string;
+  updateTime: string;
   tags: Tag[];
   category: Category;
   isTop: boolean;
+  length: number;
+  folder: ParentFolder;
+};
+
+export type Folder = {
+  id: number;
+  name: string;
+  parent: Folder | null;
+  folders: Folder[];
+  articles: Article[];
+  createTime: string;
+  updateTime: string;
+  articleCount: number | null;
+  folderCount: number | null;
+};
+
+export type ArticleDetail = Article & {
+  content: string;
+};
+
+export type Friend = {
+  id: number;
+  nickname: string;
+  avatar: string;
+  url: string;
+  brief: string;
+  isURLShow?: boolean;
 }
-
-
-
-
-
-
-
-
-
-
 
 
 export function fromUnderscoreToCamelCase<T>(obj: T): T {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  if (Array.isArray(obj)) return obj.map((v) => fromUnderscoreToCamelCase(v)) as any;
+  if (Array.isArray(obj))
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return obj.map((v) => fromUnderscoreToCamelCase(v)) as any;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const result = {} as any;
   for (const key in obj) {

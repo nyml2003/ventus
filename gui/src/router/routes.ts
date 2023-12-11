@@ -3,25 +3,37 @@ import { RouteRecordRaw } from 'vue-router';
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    redirect: '/folder',
-  },
-  {
-    path: '/folder',
-    component: () => import('layouts/FolderLayout.vue'),
+    component: () => import('layouts/MainLayout.vue'),
+    redirect: '/index',
     children: [
       {
-        path: '',
-        component: () => import('components/indexPage.vue'),
+        path: 'index',
+        component: () => import('pages/IndexPage.vue'),
       },
       {
-        path: 'article',
+        path: 'folder',
+        redirect: '/folder/detail/0',
+        component: () => import('layouts/FolderLayout.vue'),
         children: [
           {
-            path: ':id',
-            component: () => import('components/ArticleDetail.vue'),
+            path: 'detail/:id',
+            component: () => import('components/FolderCard.vue'),
+          },
+          {
+            path: 'article',
+            children: [
+              {
+                path: ':id',
+                component: () => import('components/ArticleDetail.vue'),
+              },
+            ],
           },
         ],
       },
+      {
+        path: 'friend',
+        component: () => import('pages/FriendPage.vue'),
+      }
     ],
   },
 

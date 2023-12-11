@@ -1,0 +1,128 @@
+<script setup lang="ts">
+import { onMounted, ref } from 'vue';
+import { Friend } from 'src/components/models';
+import { getFriendList } from 'src/boot/axios/requests';
+const friends = ref<Friend[]>([] as Friend[]);
+const toFriendDetail = (id: number) => {
+  window.open(friends.value[id].url);
+};
+onMounted(async () => {
+  friends.value = await getFriendList();
+  friends.value.forEach((friend) => {
+    friend.isURLShow = false;
+  });
+});
+const showURL = (index: number) => {
+  friends.value[index].isURLShow = true;
+};
+const hideURL = (index: number) => {
+  friends.value[index].isURLShow = false;
+};
+
+</script>
+
+<template>
+  <q-page class="flex flex-col items-center">
+    <div class="flex flex-center q-my-md">
+        <q-icon name="link" size="2rem" class="text-primary" />
+        <div class="text-h3 text-weight-bolder text-center q-ma-md">友情链接</div>
+    </div>
+    <div class="q-px-xl flex flex-wrap content-start max-w-[1200px]">
+    <q-card
+      class="q-ma-lg card_friend rounded-xl cursor-pointer w-[300px] "
+      :class="`bg-friend-${index % 7}`"
+      @mouseenter="showURL(index - 1)"
+      @mouseleave="hideURL(index - 1)"
+      @click="toFriendDetail(index - 1)"
+      v-for="index in friends.length"
+      :key="index"
+    >
+      <q-avatar
+        class="q-ma-md Imground absolute-right"
+        size="100px"
+      >
+        <img :src="friends[index - 1].avatar" />
+      </q-avatar>
+      <div class="q-ma-md bg-friend-text-1 absolute-top-left text-h6 typewriter text-caption" v-show="friends[index - 1].isURLShow">
+        {{ friends[index - 1].url }}
+      </div>
+      <div
+        class="q-ma-md bg-friend-text-0 text-white absolute-bottom-left text-weight-bolder text-h5"
+      >
+        {{ friends[index - 1].nickname }}
+      </div>
+
+    </q-card>
+    </div>
+  </q-page>
+</template>
+
+<style scoped>
+
+.typewriter {
+    overflow: hidden;
+    white-space: nowrap;
+    animation: typing 2s steps(40);
+}
+
+@keyframes typing {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+.Imground {
+    border-radius: 50% !important;
+}
+.card_friend {
+  height: 150px;
+}
+
+.card_friend:hover {
+  transform: scale(1.05);
+  transition: all 0.3s ease-in-out;
+}
+
+.bg-friend-0 {
+  background-image: linear-gradient(to bottom right, #a7d4f7, #d8a7f7);
+}
+
+.bg-friend-1 {
+  background-image: linear-gradient(to bottom right, #d834c2, #f7a8b8);
+}
+
+.bg-friend-2 {
+  background-image: linear-gradient(to bottom right, #f7a8b8, #fbc2a7);
+}
+
+.bg-friend-3 {
+  background-image: linear-gradient(to bottom right, #fbc2a7, #f7e3a7);
+}
+
+.bg-friend-4 {
+  background-image: linear-gradient(to bottom right, #f7e3a7, #a7f7c4);
+}
+
+.bg-friend-5 {
+  background-image: linear-gradient(to bottom right, #a7f7c4, #a7f7f2);
+}
+
+.bg-friend-6 {
+  background-image: linear-gradient(to bottom right, #a7f7f2, #a7d4f7);
+}
+
+.bg-friend-text-0 {
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(to bottom right, #444444, #666666);
+}
+
+.bg-friend-text-1 {
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(to bottom right, #333333, #555555);
+}
+</style>

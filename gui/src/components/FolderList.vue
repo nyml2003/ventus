@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { defineProps, onMounted,  ref } from 'vue';
-import { FolderBase } from 'components/models';
+import { Folder } from 'components/models';
 import { getFileList } from 'src/boot/axios/requests';
 import ArticleItem from './ArticleItem.vue';
+import { useRouter } from 'vue-router';
+const router = useRouter();
 
 const props = defineProps({
   id: {
@@ -10,7 +12,7 @@ const props = defineProps({
     required: true,
   },
 });
-const folder = ref<FolderBase>({} as FolderBase);
+const folder = ref<Folder>({} as Folder);
 onMounted(async () => {
   folder.value = await getFileList(props.id);
 });
@@ -18,6 +20,7 @@ const icon = ref('keyboard_arrow_right');
 const isVisible = ref(false);
 function toggleVisibility() {
   isVisible.value = !isVisible.value;
+  router.push(`/folder/detail/${folder.value.id}`);
   if (isVisible.value) {
     icon.value = 'keyboard_arrow_down';
   } else {
@@ -59,7 +62,7 @@ function toggleVisibility() {
       dense
     >
       <q-item-section>
-        <FileList
+        <FolderList
           v-for="child in folder.folders"
           :id="child.id"
           :key="child.id"
