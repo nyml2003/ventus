@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {ArticleDetail, Folder, Friend, fromUnderscoreToCamelCase} from 'components/models';
+import {ArticleDetail, Character, CharacterDetail, Equipment, Folder, Friend, fromUnderscoreToCamelCase} from 'components/models';
 
 export const devURL  = 'http://127.0.0.1:5000/';
 export const baseURL : string = process.env.NODE_ENV === 'production' ? 'https://api.example.com' : devURL
@@ -59,5 +59,82 @@ export async function getFriendList(): Promise<Friend[]> {
   catch (error) {
     console.log(error);
     return [] as Friend[];
+  }
+}
+
+export async function refreshAttribute(id:number,attribute: string): Promise<Equipment> {
+  try {
+    const { data } = await api.get(`/game/equipment/${id}/refresh/${attribute}`);
+    return data;
+  }
+  catch (error) {
+    console.log(error);
+    return {} as Equipment;
+  }
+}
+
+export async function removeAttribute(id:number,attribute: string): Promise<Equipment> {
+  try {
+    const { data } = await api.get(`/game/equipment/${id}/remove/${attribute}`);
+    return data;
+  }
+  catch (error) {
+    console.log(error);
+    return {} as Equipment;
+  }
+}
+
+export async function upgradeAttribute(id:number,attribute: string): Promise<Equipment> {
+  try {
+    const { data } = await api.get(`/game/equipment/${id}/upgrade/${attribute}`);
+    return data;
+  }
+  catch (error) {
+    console.log(error);
+    return {} as Equipment;
+  }
+}
+
+export async function upgradeEquipment(id:number): Promise<Equipment> {
+  try {
+    const { data } = await api.get(`/game/equipment/${id}/upgrade`);
+    return data;
+  }
+  catch (error) {
+    console.log(error);
+    return {} as Equipment;
+  }
+}
+
+export async function refreshEquipment(id:number): Promise<Equipment> {
+  try {
+    const { data } = await api.get(`/game/equipment/${id}/refresh`);
+    return data;
+  }
+  catch (error) {
+    console.log(error);
+    return {} as Equipment;
+  }
+}
+
+
+export async function getCharacterList(): Promise<Character[]> {
+  try {
+    const { data } = await api.get('/game/character/list');
+    return data;
+  }
+  catch (error) {
+    console.log(error);
+    return [] as Character[];
+  }
+}
+
+export async function getCharacterById(id: number): Promise<CharacterDetail> {
+  try {
+    const { data } = await api.get(`/game/character/${id}`);
+    return data;
+  } catch (error) {
+    console.log(error);
+    return {} as CharacterDetail;
   }
 }

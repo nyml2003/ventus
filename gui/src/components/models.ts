@@ -1,3 +1,4 @@
+import { QCard } from 'quasar';
 export interface Todo {
   id: number;
   content: string;
@@ -84,3 +85,58 @@ export function fromUnderscoreToCamelCase<T>(obj: T): T {
   }
   return result;
 }
+
+export type Term = {
+  value: number;
+  evaluation: number;
+  level: number;
+};
+
+export type Equipment = {
+  id: number;
+  level: number;
+  name: string;
+  attack: Term;
+  attack_percent: Term;
+  defense: Term;
+  defense_percent: Term;
+  health: Term;
+  health_percent: Term;
+  critical_rate: Term;
+  critical_damage: Term;
+};
+
+export type Character = {
+  id: number;
+  name: string;
+  level: number;
+  birth: Date;
+  attack: number;
+  defense: number;
+  health: number;
+  critical_rate: number;
+  critical_damage: number;
+  card: QCard | null;
+  equipments: Equipment[];
+};
+
+export type CharacterDetail = Character & {
+  extra_attack: number;
+  base_attack_color: string;
+  attack_color: string;
+  extra_attack_color: string;
+  extra_defense: number;
+  base_defense_color: string;
+  defense_color: string;
+  extra_defense_color: string;
+  extra_health: number;
+  base_health_color: string;
+  health_color: string;
+  extra_health_color: string;
+};
+
+
+export type ExpectedDamageResult = {
+  expectedDamageRate: string;
+  description: string;
+};

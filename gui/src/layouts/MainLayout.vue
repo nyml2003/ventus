@@ -12,11 +12,15 @@ function toGithub() {
     >
       <q-toolbar class="text-black justify-center">
         <q-tabs inline-label class="w-2/3" mobile-arrows outside-arrows>
-          <q-route-tab exact icon="home" label="首页" to="/index" dense/>
-          <q-route-tab exact icon="group" label="友链" to="/friend" dense/>
-          <q-route-tab exact icon="menu_book" label="文章" to="/folder" dense/>
-          <q-route-tab exact icon="videogame_asset" label="游戏" to="/game" dense/>
-          <q-btn flat label="github" @click="toGithub" class="q-ml-md" dense/>
+          <q-route-tab exact icon="home" label="首页" to="/index" dense class="desktop-only"/>
+          <q-route-tab exact icon="group" label="友链" to="/friend" dense class="desktop-only"/>
+          <q-route-tab exact icon="menu_book" label="文章" to="/folder" dense class="desktop-only"/>
+          <q-route-tab exact icon="videogame_asset" label="游戏" to="/game" dense class="desktop-only"/>
+          <q-route-tab exact icon="home" to="/index" dense class="mobile-only"/>
+          <q-route-tab exact icon="group" to="/friend" dense class="mobile-only"/>
+          <q-route-tab exact icon="menu_book" to="/folder" dense class="mobile-only"/>
+          <q-route-tab exact icon="videogame_asset" to="/game" dense class="mobile-only"/>
+          <q-btn flat label="github" @click="toGithub" class="q-ml-md" dense />
         </q-tabs>
       </q-toolbar>
     </q-header>

@@ -13,7 +13,7 @@ const routes: RouteRecordRaw[] = [
       {
         path: 'folder',
         redirect: '/folder/detail/0',
-        component: () => import('layouts/FolderLayout.vue'),
+        component: () => import('pages/FolderPage.vue'),
         children: [
           {
             path: 'detail/:id',
@@ -33,7 +33,24 @@ const routes: RouteRecordRaw[] = [
       {
         path: 'friend',
         component: () => import('pages/FriendPage.vue'),
-      }
+      },
+      {
+        path: 'game',
+        children: [
+          {
+            path: '',
+            component: () => import('pages/GreetPage.vue'),
+          },
+          {
+            path: 'choose/hero',
+            component: () => import('pages/ChooseHeroPage.vue'),
+          },
+          {
+            path: 'choose/enemy',
+            component: () => import('pages/ChooseEnemyPage.vue'),
+          },
+        ],
+      },
     ],
   },
 

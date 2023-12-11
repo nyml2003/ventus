@@ -9,9 +9,7 @@ const id = ref(parseInt(route.params.id as string));
 const router = useRouter();
 const folder = ref({} as Folder);
 async function gotoParent() {
-  // parent == {} means this folder is root folder
   if (folder.value.id === 0) {
-    router.push('/folder/index');
     return;
   }
   router.push(`/folder/detail/${folder.value.parent?.id}`);
