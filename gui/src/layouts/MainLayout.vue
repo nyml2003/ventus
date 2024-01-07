@@ -11,7 +11,7 @@ function toGithub() {
       style="backdrop-filter: blur(10px)"
     >
       <q-toolbar class="text-black justify-center">
-        <q-tabs inline-label class="w-2/3" mobile-arrows outside-arrows>
+        <q-tabs inline-label class="w-5/6" mobile-arrows outside-arrows>
           <q-route-tab exact icon="home" label="首页" to="/index" dense class="desktop-only"/>
           <q-route-tab exact icon="group" label="友链" to="/friend" dense class="desktop-only"/>
           <q-route-tab exact icon="menu_book" label="文章" to="/folder" dense class="desktop-only"/>

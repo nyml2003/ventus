@@ -1,24 +1,34 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import FolderList from 'src/components/FolderList.vue';
-import { TouchPanValue, useQuasar } from 'quasar';
+import { TouchPanValue,useQuasar } from 'quasar';
 import MdCatalog from 'src/components/MdCatalog.vue';
 const $q = useQuasar();
-const splitter = ref(200);
+const splitter = ref(0);
 const handleTouchPan: TouchPanValue = async (details) => {
+  if (details.isFinal && details.direction === 'right' && details?.position?.left && details.position.left < 200) {
+
+    splitter.value = 200;
+    foldeStore.isDrawerOpen = true;
+    return;
+  }
+  foldeStore.isDrawerOpen = false;
   if (details.isFinal && (
     details.direction === 'left' || (
       details.direction === 'right' &&
       details?.position?.left &&
       details.position.left < 200)
-    )){
+  )) {
+      await new Promise((resolve) => {
+        setTimeout(() => {
+          resolve('');
+        }, 200);
+      });
     splitter.value = 0;
     foldeStore.isDrawerOpen = false;
+    return;
   }
-  if (details.isFinal && details.direction === 'right' && details?.position?.left && details.position.left < 200) {
-    splitter.value = 200;
-    foldeStore.isDrawerOpen = true;
-  }
+
   if (
     $q.platform.is.desktop &&
     details?.position?.left &&
@@ -26,7 +36,8 @@ const handleTouchPan: TouchPanValue = async (details) => {
     details.position.left <= window.innerWidth /3
   ) {
     foldeStore.isDrawerOpen = true;
-    splitter.value = details?.position?.left || 0;
+    splitter.value = details?.position?.left;
+    return;
   }
 };
 function toggleDrawer() {
@@ -40,6 +51,16 @@ interface Tab {
 }
 const foldeStore = useFolderStore();
 import { useFolderStore } from 'src/stores/folderStore';
+const onMobileClick = () => {
+  if ($q.platform.is.mobile) {
+    foldeStore.isDrawerOpen = true;
+    splitter.value = 200;
+  }
+};
+const closeDrawer = async() => {
+  foldeStore.isDrawerOpen = false;
+  splitter.value = 0;
+};
 </script>
 
 <template>
@@ -65,6 +86,14 @@ import { useFolderStore } from 'src/stores/folderStore';
           <MdCatalog :catalog="foldeStore.catalog" />
         </q-tab-panel>
       </q-tab-panels>
+      <q-btn
+          dense
+          round
+          color="primary"
+          :icon = "foldeStore.isDrawerOpen ? 'chevron_left' : 'chevron_right'"
+          class="mobile-only w-16 h-16 absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-1/2"
+          @click="closeDrawer"
+        />
     </q-drawer>
       <q-page-sticky class="z-top" position="left" :offset="[-16.8, 0]">
         <q-btn
@@ -77,6 +106,6 @@ import { useFolderStore } from 'src/stores/folderStore';
           @click="toggleDrawer"
         />
       </q-page-sticky>
-      <router-view />
+      <router-view @click="onMobileClick"/>
       </q-page>
 </template>

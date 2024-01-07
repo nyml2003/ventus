@@ -12,7 +12,7 @@ export const useFolderStore = defineStore('folder',() => {
   const editorState = reactive({
     editorId: 'article-editor',
   });
-  const isDrawerOpen = ref($q.platform.is.desktop);
+  const isDrawerOpen = ref(false);
   const toggleDrawer = () => {
     isDrawerOpen.value = !isDrawerOpen.value;
   }

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {QCard} from 'quasar';
+import {QCard, QCarousel} from 'quasar';
 import {Ref, ref} from 'vue';
 import { Character } from 'src/components/models';
 import {getCharacterList} from 'src/boot/axios/requests';
@@ -23,25 +23,31 @@ async function choose() {
   await gameStore.setHero(selectedCharacter.value);
   router.push('/game/choose/enemy');
 }
+function nextCharacter() {
+  carousel.value?.next();
+}
+function prevCharacter() {
+  carousel.value?.previous();
+}
+const carousel = ref<QCarousel>();
 </script>
 
 <template>
   <q-page class="flex flex-center">
-    <q-card class="rounded-3xl min-h-[80vh] flex flex-center flex-col">
+    <q-card class="rounded-3xl min-h-[80vh] flex items-start flex-col">
       <q-card-actions>
+        <q-btn label="上一个" @click="prevCharacter" :disable="selectedCharacter === characters[0]?.id" />
+        <q-btn label="下一个" @click="nextCharacter" :disable="selectedCharacter === characters[characters.length - 1]?.id" />
         <q-btn @click="choose" label="选择" />
       </q-card-actions>
       <q-card-section v-if="characters.length > 0">
         <q-carousel
+        ref="carousel"
         v-model="selectedCharacter"
         transition-prev="scale"
         transition-next="scale"
         swipeable
         animated
-        class="full-height"
-        arrows
-        vertical
-        infinite
         control-color="primary"
         control-size="2em"
       >

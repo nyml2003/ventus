@@ -22,20 +22,21 @@ const hideURL = (index: number) => {
 </script>
 
 <template>
-  <q-page class="flex flex-col items-center">
-    <div class="flex flex-center q-my-md">
+  <q-page >
+    <div class="flex flex-col items-center q-mx-xl">
+    <div class="flex flex-center q-mt-lg">
         <q-icon name="link" size="2rem" class="text-primary" />
         <div class="text-h3 text-weight-bolder text-center q-ma-md">友情链接</div>
     </div>
-    <div class="q-px-xl flex flex-wrap content-start max-w-[1200px]">
+    <div class="fit row wrap justify-start items-start content-start">
+      <div v-for="index in friends.length" :key="index" class="col-12 col-sm-12 col-md-4">
     <q-card
-      class="q-ma-lg card_friend rounded-xl cursor-pointer w-[300px] "
+      class="q-ma-md card_friend rounded-xl cursor-pointer"
       :class="`bg-friend-${index % 7}`"
       @mouseenter="showURL(index - 1)"
       @mouseleave="hideURL(index - 1)"
       @click="toFriendDetail(index - 1)"
-      v-for="index in friends.length"
-      :key="index"
+
     >
       <q-avatar
         class="q-ma-md Imground absolute-right"
@@ -53,6 +54,8 @@ const hideURL = (index: number) => {
       </div>
 
     </q-card>
+    </div>
+    </div>
     </div>
   </q-page>
 </template>

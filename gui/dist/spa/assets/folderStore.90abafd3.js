@@ -1,0 +1,1 @@
+import{i as n,a5 as l,a6 as c,r,u}from"./index.9a14d4d5.js";function i(){return n(l)}const g=c("folder",()=>{const a=r([]),t=s=>{a.value=s};i();const o=u({editorId:"article-editor"}),e=r(!1);return{catalog:a,setCatalog:t,editorState:o,isDrawerOpen:e,toggleDrawer:()=>{e.value=!e.value},openDrawer:()=>{e.value=!0},closeDrawer:()=>{e.value=!1}}});export{g as a,i as u};
