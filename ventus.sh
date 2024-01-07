@@ -32,7 +32,6 @@ elif [ "$1" == "build" ]; then
     sudo cp -r gui/dist /var/www/blog/
     sudo systemctl restart nginx
     uwsgi --ini uwsgi.ini
-    python3 manage.py runserver 5000
 else
     echo "Usage: ventus.sh [init|run|update|db|build]"
 fi
