@@ -8,11 +8,14 @@ export const useFolderStore = defineStore('folder',() => {
   const setCatalog: GetCatalogEvent = (list) => {
     catalog.value = list;
   };
+  const resetCatalog = () => {
+    catalog.value = [];
+  }
   const $q = useQuasar();
   const editorState = reactive({
     editorId: 'article-editor',
   });
-  const isDrawerOpen = ref(false);
+  const isDrawerOpen = ref(true);
   const toggleDrawer = () => {
     isDrawerOpen.value = !isDrawerOpen.value;
   }
@@ -22,7 +25,6 @@ export const useFolderStore = defineStore('folder',() => {
   const closeDrawer = () => {
     isDrawerOpen.value = false;
   }
-
   return {
     catalog,
     setCatalog,
@@ -31,5 +33,6 @@ export const useFolderStore = defineStore('folder',() => {
     toggleDrawer,
     openDrawer,
     closeDrawer,
+    resetCatalog,
   }
 })
